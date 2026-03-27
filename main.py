@@ -1,12 +1,14 @@
 from hombre import PacienteHombre
 from mujer import PacienteMujer
 
+
 def pedir_numero(mensaje, tipo):
     while True:
         try:
             return tipo(input(mensaje))
         except ValueError:
             print("Debe ingresar un número válido")
+
 
 def pedir_talla(mensaje):
     while True:
@@ -19,6 +21,7 @@ def pedir_talla(mensaje):
         except ValueError:
             print("Debe ingresar un número válido")
 
+
 def pedir_sexo():
     while True:
         sexo = input("Ingrese el sexo (Masculino/Femenino): ").upper()
@@ -28,7 +31,6 @@ def pedir_sexo():
 
 
 def main():
-
     nombre = input("Ingrese el nombre: ")
     sexo = pedir_sexo()
     edad = pedir_numero("Ingrese la edad: ", int)
@@ -36,17 +38,25 @@ def main():
     talla = pedir_talla("Ingrese el talla (MTS): ")
     factor_actividad = pedir_numero("Ingrese el factor de actividad: ", float)
     factor_estres = pedir_numero("Ingrese el factor de estres: ", float)
+    carpo = pedir_numero("Ingrese el carpo: ", float)
 
     if sexo == "MASCULINO":
-        p = PacienteHombre(nombre, edad, peso, talla, factor_actividad, factor_estres)
+        p = PacienteHombre(nombre, edad, peso, talla, carpo, factor_actividad, factor_estres)
 
     else:
-        p = PacienteMujer(nombre, edad, peso, talla, factor_actividad, factor_estres)
+        p = PacienteMujer(nombre, edad, peso, talla, carpo, factor_actividad, factor_estres)
 
     print(f"IMC: {p.calcular_imc():.2f}")
     print(f"Clasificación: {p.clasificar_imc()}")
     print(f"TMB: {p.calcular_tmb():.1f} kcal")
     print(f"GET(Mifflin-St Jeor): {p.calcular_get():.1f} kcal")
+    print(p.calcular_contextura())
+    print(p.clasificar_contextura())
+    print(p.calcular_imc_ideal_contextura())
+    print(p.calcular_peso_ideal())
+    print(p.calcular_peso_maximo())
+    print(p.calcular_peso_minimo())
+    print(p.calcular_peso_ajustado())
 
 
 if __name__ == "__main__":
