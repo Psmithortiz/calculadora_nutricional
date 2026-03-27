@@ -52,20 +52,21 @@ def main():
     print("EVALUACION NUTRICIONAL - " + p.nombre)
     print("========================================")
     print("ANTROPOMETRIA")
-    print(f"{'IMC:':<20}{p.calcular_imc():.2f}" " -> " + p.clasificar_imc())
-    print(f"{"Contextura: "}{p.clasificar_contextura()} {" Indice: "}  {p.calcular_contextura():.1f}")
+    print(f" IMC:   {p.calcular_imc():.2f}" " -> " + p.clasificar_imc())
+    print(f" Contextura: {p.clasificar_contextura()}  Indice:  {p.calcular_contextura():.1f}")
     print("")
     print("PESOS DE REFERENCIA")
-    print(f"Peso ideal:  {p.calcular_peso_ideal():.2f}")
-    print(f"Peso maximo:  {p.calcular_peso_maximo():.2f}")
-    print(f"Peso minimo :  {p.calcular_peso_minimo():.2f}")
-    print(f"Peso ajustado : {p.calcular_peso_ajustado():.2f}")
+    print(f" IMC ideal (contextura): {p.calcular_imc_ideal_contextura()}")
+    print(f" Peso ideal:    {p.calcular_peso_ideal():.2f}")
+    print(f" Peso maximo:   {p.calcular_peso_maximo():.2f}")
+    print(f" Peso minimo:   {p.calcular_peso_minimo():.2f}")
+    print(f" Peso ajustado: {p.calcular_peso_ajustado():.2f}")
     print("")
     print("REQUERIMIENTO ENERGETICO")
-    print(f"TMB: {p.calcular_tmb():.1f} kcal")
-    print(f"GET(Mifflin-St Jeor): {p.calcular_get():.1f} kcal")
+    print(f" TMB:           {p.calcular_tmb():.1f} kcal")
+    print(f" GET(Mifflin):  {p.calcular_get():.1f} kcal")
 
-    print(p.calcular_imc_ideal_contextura())
+
 
 
 
