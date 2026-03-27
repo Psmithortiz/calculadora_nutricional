@@ -46,17 +46,27 @@ def main():
     else:
         p = PacienteMujer(nombre, edad, peso, talla, carpo, factor_actividad, factor_estres)
 
-    print(f"IMC: {p.calcular_imc():.2f}")
-    print(f"Clasificación: {p.clasificar_imc()}")
+
+#REPORTE
+    print("========================================")
+    print("EVALUACION NUTRICIONAL - " + p.nombre)
+    print("========================================")
+    print("ANTROPOMETRIA")
+    print(f"{'IMC:':<20}{p.calcular_imc():.2f}" " -> " + p.clasificar_imc())
+    print(f"{"Contextura: "}{p.clasificar_contextura()} {" Indice: "}  {p.calcular_contextura():.1f}")
+    print("")
+    print("PESOS DE REFERENCIA")
+    print(f"Peso ideal:  {p.calcular_peso_ideal():.2f}")
+    print(f"Peso maximo:  {p.calcular_peso_maximo():.2f}")
+    print(f"Peso minimo :  {p.calcular_peso_minimo():.2f}")
+    print(f"Peso ajustado : {p.calcular_peso_ajustado():.2f}")
+    print("")
+    print("REQUERIMIENTO ENERGETICO")
     print(f"TMB: {p.calcular_tmb():.1f} kcal")
     print(f"GET(Mifflin-St Jeor): {p.calcular_get():.1f} kcal")
-    print(p.calcular_contextura())
-    print(p.clasificar_contextura())
+
     print(p.calcular_imc_ideal_contextura())
-    print(p.calcular_peso_ideal())
-    print(p.calcular_peso_maximo())
-    print(p.calcular_peso_minimo())
-    print(p.calcular_peso_ajustado())
+
 
 
 if __name__ == "__main__":
