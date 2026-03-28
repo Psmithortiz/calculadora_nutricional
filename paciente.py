@@ -1,5 +1,8 @@
+import math
+
 class Paciente:
-    def __init__(self, nombre, edad, peso, talla, carpo, factor_actividad, factor_estres=1.0):
+    def __init__(self, nombre, edad, peso, talla, carpo, cb, pct_cm,
+                 factor_actividad, factor_estres=1.0):
         self.nombre = nombre
         self.edad = edad
         self.peso = peso
@@ -7,6 +10,8 @@ class Paciente:
         self.factor_actividad = factor_actividad
         self.factor_estres = factor_estres
         self.carpo = carpo
+        self.pct_cm = pct_cm
+        self.cb = cb
 
     def calcular_imc(self):
         imc = self.peso / self.talla ** 2
@@ -53,3 +58,10 @@ class Paciente:
     def calcular_peso_ajustado(self):
         peso_ideal = self.calcular_peso_ideal()
         return peso_ideal + 0.25 * (self.peso - peso_ideal)
+
+    def calcular_cmb(self):
+        return self.cb - (math.pi * (self.pct_cm / 10))
+    def calcular_amb(self):
+        return self.calcular_cmb() ** 2 / (4 * math.pi)
+    def calcular_agb(self):
+        return (self.cb ** 2 / (4 * math.pi)) - self.calcular_amb()
