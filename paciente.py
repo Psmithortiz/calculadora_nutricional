@@ -1,5 +1,6 @@
 import math
 
+
 class Paciente:
     def __init__(self, nombre, edad, peso, talla, carpo, cb, pct_cm,
                  factor_actividad, factor_estres=1.0):
@@ -14,8 +15,7 @@ class Paciente:
         self.cb = cb
 
     def calcular_imc(self):
-        imc = self.peso / self.talla ** 2
-        return imc
+        return self.peso / self.talla ** 2
 
     def clasificar_imc(self):
         imc = self.calcular_imc()
@@ -29,12 +29,10 @@ class Paciente:
             return "Bajo peso"
 
     def calcular_get(self):
-        gasto_energetico_total = self.calcular_tmb() * self.factor_actividad * self.factor_estres
-        return gasto_energetico_total
+        return self.calcular_tmb() * self.factor_actividad * self.factor_estres
 
     def calcular_contextura(self):
-        contextura = (self.talla * 100) / self.carpo
-        return contextura
+        return (self.talla * 100) / self.carpo
 
     def calcular_imc_ideal_contextura(self):
         contextura = self.clasificar_contextura()
@@ -61,7 +59,9 @@ class Paciente:
 
     def calcular_cmb(self):
         return self.cb - (math.pi * (self.pct_cm / 10))
+
     def calcular_amb(self):
         return self.calcular_cmb() ** 2 / (4 * math.pi)
+
     def calcular_agb(self):
         return (self.cb ** 2 / (4 * math.pi)) - self.calcular_amb()
