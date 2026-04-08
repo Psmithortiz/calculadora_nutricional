@@ -1,7 +1,8 @@
 import math
+from abc import ABC, abstractmethod
 
 
-class Paciente:
+class Paciente(ABC):
     def __init__(self, nombre, edad, peso, talla, carpo, cb, pct_cm,
                  factor_actividad, factor_estres=1.0):
         self.nombre = nombre
@@ -13,6 +14,14 @@ class Paciente:
         self.carpo = carpo
         self.pct_cm = pct_cm
         self.cb = cb
+
+    @abstractmethod
+    def calcular_tmb(self):
+        pass
+
+    @abstractmethod
+    def clasificar_contextura(self):
+        pass
 
     def calcular_imc(self):
         return self.peso / self.talla ** 2
@@ -43,6 +52,8 @@ class Paciente:
                 return 23 if self.edad < 65 else 26
             case "Grande":
                 return 25 if self.edad < 65 else 28
+            case _:
+                raise ValueError(f"Contextura no reconocida: {contextura}")
 
     def calcular_peso_ideal(self):
         return self.calcular_imc_ideal_contextura() * self.talla ** 2

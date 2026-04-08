@@ -20,13 +20,13 @@ Developed based on real clinical practice experience at Hospital Hernán Henríq
 
 ## Tech Stack
 
-- Python 3.10+
+- Python 3.10+ (required for match/case syntax)
 - Object-oriented design: base class `Paciente` with `PacienteHombre` and `PacienteMujer` subclasses
 - No external dependencies
 
 ## How to Run
 
-1. Make sure you have Python 3.10+ installed
+1. Make sure you have Python 3.10+ installed 
 2. Clone the repository:
 ```
 git clone https://github.com/Psmithortiz/calculadora_nutricional.git

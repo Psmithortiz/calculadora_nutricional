@@ -70,7 +70,7 @@ def obtener_tabla_edad(tabla, edad):
     for (edad_min, edad_max), percentiles in tabla.items():
         if edad_min <= edad <= edad_max:
             return percentiles
-    return None
+    raise ValueError(f"Edad {edad} fuera de rango de las tablas")
 
 
 def clasificar_percentil(valor, percentiles, clasificacion):
@@ -78,5 +78,6 @@ def clasificar_percentil(valor, percentiles, clasificacion):
     for corte, descripcion in clasificacion:
         if corte == float('inf') or valor <= percentiles[corte]:
             adecuacion = (valor / percentiles[50]) * 100
-            return f"{descripcion} (p{corte_anterior}-p{corte}) | Adecuación: {adecuacion:.1f}%"
+            corte_str = f">p{corte_anterior}" if corte == float('inf') else f"p{corte_anterior}-p{corte}"
+            return f"{descripcion} ({corte_str}) | Adecuación: {adecuacion:.1f}%"
         corte_anterior = corte
