@@ -76,7 +76,7 @@ def obtener_tabla_edad(tabla, edad):
 def clasificar_percentil(valor, percentiles, clasificacion):
     corte_anterior = 0
     for corte, descripcion in clasificacion:
-        if corte == float('inf') or valor < percentiles[corte]:
+        if corte == float('inf') or valor <= percentiles[corte]:
             adecuacion = (valor / percentiles[50]) * 100
             return f"{descripcion} (p{corte_anterior}-p{corte}) | Adecuación: {adecuacion:.1f}%"
         corte_anterior = corte

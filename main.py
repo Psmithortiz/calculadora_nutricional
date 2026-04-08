@@ -68,7 +68,7 @@ def main():
     print("EVALUACION NUTRICIONAL - " + p.nombre)
     print("========================================")
     print("ANTROPOMETRIA")
-    print(f" IMC:   {p.calcular_imc():.2f}" " -> " + p.clasificar_imc())
+    print(f" IMC:   {p.calcular_imc():.2f} -> {p.clasificar_imc()}")
     print(f" Contextura: {p.clasificar_contextura()}  Indice:  {p.calcular_contextura():.1f}")
     print()
     print("PESOS DE REFERENCIA")
