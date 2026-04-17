@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 
 
 class Paciente(ABC):
-    def __init__(self, nombre, edad, peso, talla, carpo, cb, pct_cm,
+    def __init__(self, nombre, edad, peso, talla, carpo, cb, pct_mm,
                  factor_actividad, factor_estres=1.0):
         self.nombre = nombre
         self.edad = edad
@@ -12,7 +12,7 @@ class Paciente(ABC):
         self.factor_actividad = factor_actividad
         self.factor_estres = factor_estres
         self.carpo = carpo
-        self.pct_cm = pct_cm
+        self.pct_mm = pct_mm
         self.cb = cb
 
     @abstractmethod
@@ -28,9 +28,9 @@ class Paciente(ABC):
 
     def clasificar_imc(self):
         imc = self.calcular_imc()
-        if imc > 29.9:
+        if imc >= 30:
             return "Obesidad"
-        elif imc > 24.9:
+        elif imc >= 25:
             return "Sobrepeso"
         elif imc >= 18.5:
             return "Eutrofico"
@@ -69,7 +69,7 @@ class Paciente(ABC):
         return peso_ideal + 0.25 * (self.peso - peso_ideal)
 
     def calcular_cmb(self):
-        return self.cb - (math.pi * (self.pct_cm / 10))
+        return self.cb - (math.pi * (self.pct_mm / 10))
 
     def calcular_amb(self):
         return self.calcular_cmb() ** 2 / (4 * math.pi)

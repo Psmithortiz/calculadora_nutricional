@@ -1,7 +1,6 @@
 from hombre import PacienteHombre
 from mujer import PacienteMujer
-from tablas_frisancho import AMB_HOMBRE, AMB_MUJER, AGB_HOMBRE, AGB_MUJER, CLASIFICACION_MUSCULAR, CLASIFICACION_GRASA, \
-    obtener_tabla_edad, clasificar_percentil
+from tablas_frisancho import CLASIFICACION_MUSCULAR, CLASIFICACION_GRASA, clasificar_percentil
 
 
 def pedir_numero(mensaje, tipo, minimo=None, maximo=None):
@@ -42,9 +41,10 @@ def seccion(titulo):
     print(f"\n{titulo:-^50}")
 
 def main():
+    #PEDIR DATOS
     nombre = input("Ingrese el nombre: ").strip().title()
     sexo = pedir_sexo()
-    edad = pedir_numero("Ingrese la edad (18-90 años): ", float, 18, 90)
+    edad = pedir_numero("Ingrese la edad (18-90 años): ", int, 18, 90)
 
     peso = pedir_numero("Ingrese el peso (KG): ", float, 1.0)
 
@@ -52,22 +52,18 @@ def main():
 
     factor_actividad = pedir_numero("Ingrese el factor de actividad: ", float, 1)
     factor_estres = pedir_numero("Ingrese el factor de estres: ", float, 1)
-    carpo = pedir_numero("Ingrese el carpo: ", float, 1)
-    cb = pedir_numero("Ingrese circunferencia braquial (CM): ", float, 1)
-    pct_cm = pedir_numero("Ingrese el pliegue cutaneo tricipital (mm): ", float, 1)
-
+    carpo = pedir_numero("Ingrese el carpo: ", float, 6)
+    cb = pedir_numero("Ingrese circunferencia braquial (CM): ", float, 7)
+    pct_mm = pedir_numero("Ingrese el pliegue cutaneo tricipital (mm): ", float, 2)
+#CONSTRUIR PACIENTE
     if sexo == "MASCULINO":
-        p = PacienteHombre(nombre, edad, peso, talla, carpo, cb, pct_cm,
+        p = PacienteHombre(nombre, edad, peso, talla, carpo, cb, pct_mm,
                            factor_actividad, factor_estres)
-        tabla_amb = obtener_tabla_edad(AMB_HOMBRE, edad)
-        tabla_agb = obtener_tabla_edad(AGB_HOMBRE, edad)
     else:
-        p = PacienteMujer(nombre, edad, peso, talla, carpo, cb, pct_cm,
+        p = PacienteMujer(nombre, edad, peso, talla, carpo, cb, pct_mm,
                           factor_actividad, factor_estres)
-        tabla_amb = obtener_tabla_edad(AMB_MUJER, edad)
-        tabla_agb = obtener_tabla_edad(AGB_MUJER, edad)
 
-        # REPORTE
+    # REPORTE
     print("=" * 50)
     print(f"{'EVALUACION NUTRICIONAL - ' + p.nombre:^50}")
     print("=" * 50)
@@ -91,8 +87,8 @@ def main():
     print(f"  CMB:          {p.calcular_cmb():.2f} cm")
     print(f"  AMB:          {p.calcular_amb():.2f} cm²")
     print(f"  AGB:          {p.calcular_agb():.2f} cm²")
-    print(f"\n  AMB: {clasificar_percentil(p.calcular_amb(), tabla_amb, CLASIFICACION_MUSCULAR)}")
-    print(f"  AGB: {clasificar_percentil(p.calcular_agb(), tabla_agb, CLASIFICACION_GRASA)}")
+    print(f"\n  AMB: {clasificar_percentil(p.calcular_amb(), p.tabla_amb, CLASIFICACION_MUSCULAR)}")
+    print(f"  AGB: {clasificar_percentil(p.calcular_agb(), p.tabla_agb, CLASIFICACION_GRASA)}")
     print("=" * 50)
 
 
