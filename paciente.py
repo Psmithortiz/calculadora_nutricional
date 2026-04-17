@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 
 class Paciente(ABC):
     def __init__(self, nombre, edad, peso, talla, carpo, cb, pct_mm,
-                 factor_actividad, factor_estres=1.0):
+                 factor_actividad, factor_estres):
         self.nombre = nombre
         self.edad = edad
         self.peso = peso

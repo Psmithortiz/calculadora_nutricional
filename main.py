@@ -37,33 +37,48 @@ def pedir_sexo():
             return sexo
         print("Sexo incorrecto, ingrese Masculino o Femenino")
 
+
 def seccion(titulo):
     print(f"\n{titulo:-^50}")
 
-def main():
-    #PEDIR DATOS
+
+def pedir_datos():
     nombre = input("Ingrese el nombre: ").strip().title()
     sexo = pedir_sexo()
     edad = pedir_numero("Ingrese la edad (18-90 años): ", int, 18, 90)
-
     peso = pedir_numero("Ingrese el peso (KG): ", float, 1.0)
-
     talla = pedir_talla("Ingrese la talla (MTS): ")
-
     factor_actividad = pedir_numero("Ingrese el factor de actividad: ", float, 1)
     factor_estres = pedir_numero("Ingrese el factor de estres: ", float, 1)
     carpo = pedir_numero("Ingrese el carpo: ", float, 6)
     cb = pedir_numero("Ingrese circunferencia braquial (CM): ", float, 7)
     pct_mm = pedir_numero("Ingrese el pliegue cutaneo tricipital (mm): ", float, 2)
-#CONSTRUIR PACIENTE
-    if sexo == "MASCULINO":
-        p = PacienteHombre(nombre, edad, peso, talla, carpo, cb, pct_mm,
-                           factor_actividad, factor_estres)
-    else:
-        p = PacienteMujer(nombre, edad, peso, talla, carpo, cb, pct_mm,
-                          factor_actividad, factor_estres)
+    return {
+        "nombre": nombre,
+        "sexo": sexo,
+        "edad": edad,
+        "peso": peso,
+        "talla": talla,
+        "factor_actividad": factor_actividad,
+        "factor_estres": factor_estres,
+        "carpo": carpo,
+        "cb": cb,
+        "pct_mm": pct_mm,
+    }
 
-    # REPORTE
+
+def construir_paciente(datos):
+    sexo = datos.pop("sexo")
+    if sexo == "MASCULINO":
+        return PacienteHombre(**datos)
+    else:
+        return PacienteMujer(**datos)
+
+
+def reporte(p):
+    amb = p.calcular_amb()
+    agb = p.calcular_agb()
+
     print("=" * 50)
     print(f"{'EVALUACION NUTRICIONAL - ' + p.nombre:^50}")
     print("=" * 50)
@@ -85,11 +100,17 @@ def main():
 
     seccion(" COMPOSICION CORPORAL (Frisancho 1981) ")
     print(f"  CMB:          {p.calcular_cmb():.2f} cm")
-    print(f"  AMB:          {p.calcular_amb():.2f} cm²")
-    print(f"  AGB:          {p.calcular_agb():.2f} cm²")
-    print(f"\n  AMB: {clasificar_percentil(p.calcular_amb(), p.tabla_amb, CLASIFICACION_MUSCULAR)}")
-    print(f"  AGB: {clasificar_percentil(p.calcular_agb(), p.tabla_agb, CLASIFICACION_GRASA)}")
+    print(f"  AMB:          {amb:.2f} cm²")
+    print(f"  AGB:          {agb:.2f} cm²")
+    print(f"\n  AMB: {clasificar_percentil(amb, p.tabla_amb, CLASIFICACION_MUSCULAR)}")
+    print(f"  AGB: {clasificar_percentil(agb, p.tabla_agb, CLASIFICACION_GRASA)}")
     print("=" * 50)
+
+
+def main():
+    datos = pedir_datos()
+    paciente = construir_paciente(datos)
+    reporte(paciente)
 
 
 if __name__ == "__main__":
