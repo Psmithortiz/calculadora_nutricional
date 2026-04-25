@@ -2,3 +2,5 @@ __pycache__/
 *.pyc
 .venv/
 .idea/
+pacientes.json
+test_poblar.py
