@@ -3,6 +3,7 @@ from persistencia import guardar_pacientes
 from tablas_frisancho import CLASIFICACION_MUSCULAR, CLASIFICACION_GRASA, clasificar_percentil
 
 ARCHIVO_PACIENTES = "pacientes.json"
+SEXOS = ("MASCULINO", "FEMENINO")
 
 
 def pedir_numero(mensaje, tipo, minimo=None, maximo=None):
@@ -34,10 +35,10 @@ def pedir_talla(mensaje):
 
 def pedir_sexo():
     while True:
-        sexo = input("Ingrese el sexo (Masculino/Femenino): ").upper().strip()
-        if sexo == "MASCULINO" or sexo == "FEMENINO":
+        sexo = input(f"Ingrese el sexo ({"/".join(SEXOS)}): ").upper().strip()
+        if sexo in SEXOS:
             return sexo
-        print("Sexo incorrecto, ingrese Masculino o Femenino")
+        print(f"Sexo incorrecto, ingrese ({"/".join(SEXOS)})")
 
 
 def seccion(titulo):
@@ -67,6 +68,26 @@ def pedir_datos():
         "cb": cb,
         "pct_mm": pct_mm,
     }
+
+
+def seleccionar_paciente(pacientes, accion):
+    if not pacientes:
+        print("No hay pacientes registrados")
+        return
+    while True:
+        try:
+            for i, paciente in enumerate(pacientes):
+                print(f"{i + 1}. {paciente.nombre}")
+            print("Escriba X para salir")
+
+            opcion = input("Seleccione un paciente: ").upper().strip()
+            if opcion == "X":
+                break
+            else:
+                accion(pacientes[int(opcion) - 1])
+                break
+        except(ValueError, IndexError):
+            print("Opcion invalida")
 
 
 def reporte(p):
@@ -100,6 +121,7 @@ def reporte(p):
     print(f"  AGB: {clasificar_percentil(agb, p.tabla_agb, CLASIFICACION_GRASA)}")
     print("=" * 50)
 
+
 def menu(pacientes):
     while True:
         print("\n" + "=" * 40)
@@ -113,52 +135,23 @@ def menu(pacientes):
         opcion = input("Seleccione una opción: ")
 
         match opcion:
-            case "1": #AGREGAR
+            case "1":  # AGREGAR
                 datos = pedir_datos()
                 paciente = construir_paciente(datos)
-
                 pacientes.append(paciente)
                 guardar_pacientes(pacientes, ARCHIVO_PACIENTES)
                 reporte(paciente)
-            case "2": #VER PACIENTES
-                if not pacientes:
-                    print("No hay pacientes registrados")
-                    continue
-                while True:
-                    try:
-                        for i, paciente in enumerate(pacientes):
-                            print(f"{i + 1}. {paciente.nombre}")
-                        print("Escriba X para salir")
 
-                        opcion = input("Seleccione un paciente: ").upper().strip()
-                        if opcion == "X":
-                            break
-                        else:
-                            reporte(pacientes[int(opcion) - 1])
-                            break
-                    except(ValueError, IndexError):
-                        print("Opcion invalida")
+            case "2":  # VER PACIENTES
+                seleccionar_paciente(pacientes, reporte)
 
-            case "3": #ELIMINAR
-                if not pacientes:
-                    print("No hay pacientes registrados")
-                    continue
-                while True:
-                    try:
-                        for i, paciente in enumerate(pacientes):
-                            print(f"{i + 1}. {paciente.nombre}")
-                        print("Escriba X para salir")
-                        opcion = input("Seleccione un paciente: ").upper().strip()
+            case "3":  # ELIMINAR
+                def eliminar_paciente(paciente):
+                    pacientes.remove(paciente)
+                    print("Paciente eliminado: ", paciente.nombre)
+                    guardar_pacientes(pacientes, ARCHIVO_PACIENTES)
 
-                        if opcion == "X":
-                            break
-                        else:
-                            eliminado = pacientes.pop(int(opcion) - 1)
-                            print("Paciente eliminado: ", eliminado.nombre)
-                            guardar_pacientes(pacientes, ARCHIVO_PACIENTES)
-                            break
-                    except(ValueError, IndexError):
-                        print("Opcion invalida")
+                seleccionar_paciente(pacientes, eliminar_paciente)
             case "4":
                 break
             case _:
