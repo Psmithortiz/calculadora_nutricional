@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 
 class Paciente(ABC):
     def __init__(self, nombre, edad, peso, talla, carpo, cb, pct_mm,
-                 factor_actividad, factor_estres):
+                 factor_actividad, factor_estres, sexo):
         self.nombre = nombre
         self.edad = edad
         self.peso = peso
@@ -14,6 +14,7 @@ class Paciente(ABC):
         self.carpo = carpo
         self.pct_mm = pct_mm
         self.cb = cb
+        self.sexo = sexo
 
     @abstractmethod
     def calcular_tmb(self):
@@ -22,6 +23,20 @@ class Paciente(ABC):
     @abstractmethod
     def clasificar_contextura(self):
         pass
+
+    def to_dict(self):
+        return {
+        "nombre": self.nombre,
+        "sexo": self.sexo,
+        "edad": self.edad,
+        "peso": self.peso,
+        "talla": self.talla,
+        "factor_actividad": self.factor_actividad,
+        "factor_estres": self.factor_estres,
+        "carpo": self.carpo,
+        "cb": self.cb,
+        "pct_mm": self.pct_mm,
+    }
 
     def calcular_imc(self):
         return self.peso / self.talla ** 2

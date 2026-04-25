@@ -3,9 +3,9 @@ from tablas_frisancho import AMB_MUJER, AGB_MUJER, obtener_tabla_edad
 
 class PacienteMujer(Paciente):
     def __init__(self, nombre, edad, peso, talla, carpo, cb, pct_mm,
-                 factor_actividad, factor_estres):
+                 factor_actividad, factor_estres, sexo):
         super().__init__(nombre, edad, peso, talla, carpo, cb, pct_mm,
-                         factor_actividad, factor_estres)
+                         factor_actividad, factor_estres, sexo)
         self.tabla_amb = obtener_tabla_edad(AMB_MUJER, self.edad)
         self.tabla_agb = obtener_tabla_edad(AGB_MUJER, self.edad)
 
