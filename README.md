@@ -1,11 +1,13 @@
 # Clinical Nutritional Calculator
 
-A clinical nutritional calculator built in Python. Performs anthropometric evaluation, body composition analysis (Frisancho 1981), and energy requirement calculations. Outputs results to console.
+A clinical nutritional calculator built in Python. Performs anthropometric evaluation, body composition analysis (Frisancho 1981), and energy requirement calculations via an interactive CLI menu.
 
 Developed based on real clinical practice experience at Hospital Hernán Henríquez Aravena (HHHA), Temuco, Chile.
 
 ## Features
 
+- Interactive menu: add, view, and delete patients
+- JSON persistence: patient data is saved and loaded automatically between sessions
 - Body Mass Index (BMI) calculation and classification
 - Body frame size (height-to-wrist ratio)
 - Ideal, minimum, maximum, and adjusted weight
@@ -18,15 +20,30 @@ Developed based on real clinical practice experience at Hospital Hernán Henríq
 - Percentile classification based on age and sex (Frisancho 1981 tables)
 - Adequacy percentage relative to 50th percentile reference
 
+## Project Structure
+
+```
+main.py              # Entry point: loads data, launches menu
+menu.py              # Interactive menu, input handling, report display
+paciente.py          # Abstract base class with shared calculations
+hombre.py            # PacienteHombre subclass (male-specific logic)
+mujer.py             # PacienteMujer subclass (female-specific logic)
+factory.py           # Factory function to build the correct subclass
+persistencia.py      # JSON save/load functions
+tablas_frisancho.py  # Frisancho 1981 reference tables and classification
+```
+
 ## Tech Stack
 
 - Python 3.10+ (required for match/case syntax)
-- Object-oriented design: base class `Paciente` with `PacienteHombre` and `PacienteMujer` subclasses
+- Object-oriented design: abstract base class `Paciente` with `PacienteHombre` and `PacienteMujer` subclasses
+- Factory pattern for patient construction
+- JSON persistence with UTF-8 encoding
 - No external dependencies
 
 ## How to Run
 
-1. Make sure you have Python 3.10+ installed 
+1. Make sure you have Python 3.10+ installed
 2. Clone the repository:
 ```
 git clone https://github.com/Psmithortiz/calculadora_nutricional.git
@@ -35,6 +52,10 @@ git clone https://github.com/Psmithortiz/calculadora_nutricional.git
 ```
 python main.py
 ```
+
+## Disclaimer
+
+Patient data is stored in a local JSON file without encryption or access control. This persistence layer was implemented purely as a learning exercise for JSON file handling in Python and is **not suitable for real clinical use**. In a production environment, patient data must comply with applicable data protection regulations.
 
 ## References
 

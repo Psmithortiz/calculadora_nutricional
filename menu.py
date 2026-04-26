@@ -75,11 +75,14 @@ def seleccionar_paciente(pacientes, accion):
         print("No hay pacientes registrados")
         return
     while True:
+        print("\n" + "-" * 40)
+        print("  LISTA DE PACIENTES")
+        print("-" * 40)
         try:
             for i, paciente in enumerate(pacientes):
                 print(f"{i + 1}. {paciente.nombre}")
             print("Escriba X para salir")
-
+            print("-" * 40)
             opcion = input("Seleccione un paciente: ").upper().strip()
             if opcion == "X":
                 break
